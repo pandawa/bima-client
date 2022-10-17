@@ -6,6 +6,7 @@ namespace Pandawa\Bima\Client;
 
 use Illuminate\Routing\Router;
 use Illuminate\Support\ServiceProvider;
+use Laravel\Horizon\Horizon;
 use Pandawa\Bima\Client\Middleware\BimaAuthMiddleware;
 
 /**
@@ -25,6 +26,8 @@ class BimaClientServiceProvider extends ServiceProvider
                 __DIR__.'/../config/bima.php' => config_path('bima.php'),
             ], 'bima-config');
         }
+
+        Horizon::auth(fn() => true);
 
         /** @var Router $router */
         $router = $this->app['router'];
