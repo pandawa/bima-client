@@ -14,12 +14,12 @@ use Pandawa\Bima\Client\Middleware\BimaAuthMiddleware;
  */
 class BimaClientServiceProvider extends ServiceProvider
 {
-    public function register(): void
+    public function register()
     {
         $this->mergeConfigFrom(__DIR__.'/../config/bima.php', 'bima');
     }
 
-    public function boot(): void
+    public function boot()
     {
         if ($this->app->runningInConsole()) {
             $this->publishes([
@@ -27,7 +27,9 @@ class BimaClientServiceProvider extends ServiceProvider
             ], 'bima-config');
         }
 
-        Horizon::auth(fn() => true);
+        Horizon::auth(function() {
+            return true;
+        });
 
         /** @var Router $router */
         $router = $this->app['router'];
